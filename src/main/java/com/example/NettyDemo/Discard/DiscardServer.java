@@ -1,4 +1,4 @@
-package com.example.NettyDemo;
+package com.example.NettyDemo.Discard;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -11,15 +11,14 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
  * @Auther: qiaofu
- * @Date: 2018/5/22 17:01
- * @Description:
+ * @Date: 2018/5/22 10:54
+ * @Description:丢弃任何进入的数据 启动服务端的DiscardServerHandler
  */
-public class TimeServer {
-
+public class DiscardServer {
 
     private int port;
 
-    public TimeServer(int port) {
+    public DiscardServer(int port) {
         super();
         this.port = port;
     }
@@ -62,7 +61,7 @@ public class TimeServer {
             b = b.childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new TimeServerHandler());// demo1.discard
+                    ch.pipeline().addLast(new DiscardServerHandler());// demo1.discard
                     // ch.pipeline().addLast(new
                     // ResponseServerHandler());//demo2.echo
                     // ch.pipeline().addLast(new
@@ -97,13 +96,13 @@ public class TimeServer {
             bossGroup.shutdownGracefully();
         }
     }
-    //将规则跑起来
+ //将规则跑起来
     public static void main(String[] args) throws Exception {
         int port;
         if (args.length > 0) {
             port = Integer.parseInt(args[0]);
         } else {
-            port = 8088;
+            port = 8080;
         }
         new DiscardServer(port).run();
         System.out.println("server:run()");

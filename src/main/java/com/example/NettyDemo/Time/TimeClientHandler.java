@@ -1,4 +1,4 @@
-package com.example.NettyDemo;
+package com.example.NettyDemo.Time;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;

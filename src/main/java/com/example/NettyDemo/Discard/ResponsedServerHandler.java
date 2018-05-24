@@ -1,19 +1,16 @@
-package com.example.NettyDemo;
+package com.example.NettyDemo.Discard;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.CharsetUtil;
-import io.netty.util.ReferenceCountUtil;
 
 /**
  * @Auther: qiaofu
- * @Date: 2018/5/22 10:39
- * @Description:服务端处理通道.这里只是打印一下请求的内容，并不对请求进行任何的响应 DiscardServerHandler 继承自
- *  * ChannelHandlerAdapter， 这个类实现了ChannelHandler接口， ChannelHandler提供了许多事件处理的接口方法，
- *  * 然后你可以覆盖这些方法。 现在仅仅只需要继承ChannelHandlerAdapter类而不是你自己去实现接口方法。
+ * @Date: 2018/5/22 12:16
+ * @Description:返回收到的信息
  */
-public class DiscardServerHandler extends ChannelHandlerAdapter {
+public class ResponsedServerHandler extends ChannelHandlerAdapter {
 
     /**
      * 这里我们覆盖了chanelRead()事件处理方法。 每当从客户端收到新的数据时， 这个方法会在收到消息时被调用，
@@ -31,8 +28,8 @@ public class DiscardServerHandler extends ChannelHandlerAdapter {
             ByteBuf in = (ByteBuf) msg;
             // 打印客户端输入，传输过来的的字符
             System.out.print(in.toString(CharsetUtil.UTF_8));
-            //ctx.write(in);
-            //ctx.flush();
+            ctx.write(in);
+            ctx.flush();
             //System.out.print(in.toString(CharsetUtil.UTF_8));
         } finally {
             /**
@@ -40,7 +37,7 @@ public class DiscardServerHandler extends ChannelHandlerAdapter {
              * 请记住处理器的职责是释放所有传递到处理器的引用计数对象。
              */
             // 抛弃收到的数据
-            ReferenceCountUtil.release(msg);
+            //ReferenceCountUtil.release(msg);
         }
 
     }
